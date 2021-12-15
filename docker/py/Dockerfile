@@ -8,13 +8,11 @@ LABEL maintainer="Swiss Data Science Center <info@datascience.ch>"
 USER root
 
 # Install additional dependencies and nice-to-have packages
-RUN apt-get update && apt-get install -yq --no-install-recommends \
+RUN apt update && apt install -yq --no-install-recommends \
     build-essential \
-    curl && \
-    curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
-    apt-get update && apt-get install -yq --no-install-recommends \
+    curl \
     git \
-    git-lfs=2.12.0 \
+    git-lfs \
     gnupg \
     graphviz \
     jq \
@@ -31,9 +29,8 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     python-dev \
     unzip \
     vim && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    ln -s /usr/lib/x86_64-linux-musl/libc.so /lib/libc.musl-x86_64.so.1
+    apt clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Add a new group with id 1000 and arbitrary name
 # Note: this is to standardize groups between the R and jupyter images
@@ -52,10 +49,10 @@ RUN python3 -m pip install --no-cache -U pip && \
     rm -rf /home/${NB_USER}/.cache
 
 # fix https://github.com/SwissDataScienceCenter/renku-jupyter/issues/14
-RUN conda install gxx_linux-64 && \
+RUN mamba install -y gxx_linux-64 && \
     # jupyter sets channel priority to strict which often causes very long error messages
     conda config --system --set channel_priority flexible && \
-    conda clean --all -f -y
+    mamba clean --all -f -y
 
 # install renku-python
 ENV RENKU_DISABLE_VERSION_CHECK 1

@@ -11,10 +11,7 @@ LABEL maintainer="Swiss Data Science Center <info@datascience.ch>"
 
 # install dependencies
 RUN apt-get update -y && \
-    apt-get install -y curl && \
-    curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
-    apt-get update -y && \
-    apt-get install -y gcc git git-lfs nodejs && \
+    apt-get install -y curl gcc git-lfs nodejs && \
     apt-get purge && \
     apt-get clean && \
     apt autoremove --yes && \

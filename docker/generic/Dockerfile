@@ -26,9 +26,7 @@ RUN apt-get update --fix-missing && \
     bzip2 \
     ca-certificates \
     curl \
-    gpg-agent && \
-    curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
-    apt-get install -yq --no-install-recommends \
+    gpg-agent \
     git-lfs \
     gnupg \
     libglib2.0-0 \
